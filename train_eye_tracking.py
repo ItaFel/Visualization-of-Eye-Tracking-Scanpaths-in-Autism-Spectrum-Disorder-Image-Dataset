@@ -11,7 +11,7 @@ from sklearn.metrics import classification_report, confusion_matrix, roc_auc_sco
 from sklearn.model_selection import train_test_split
 from torch import nn
 from torch.optim import AdamW
-from torch.optim.lr_scheduler import CosineAnnealingLR
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.data import DataLoader, Subset
 from torch.utils.tensorboard import SummaryWriter
 from torch.utils.mobile_optimizer import optimize_for_mobile
@@ -38,6 +38,11 @@ class TrainConfig:
     seed: int = 42
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     artifacts_dir: Path = Path("artifacts")
+    label_smoothing: float = 0.05
+    mixup_alpha: float = 0.2
+    scheduler_factor: float = 0.5
+    scheduler_patience: int = 3
+    min_lr: float = 1e-6
 
 
 def build_transforms(input_size: int = 224) -> Tuple[transforms.Compose, transforms.Compose]:
@@ -46,11 +51,27 @@ def build_transforms(input_size: int = 224) -> Tuple[transforms.Compose, transfo
     train_tf = transforms.Compose(
         [
             transforms.Resize((input_size, input_size)),
-            transforms.RandomHorizontalFlip(),
-            transforms.ColorJitter(brightness=0.1, contrast=0.1),
-            transforms.RandomRotation(5),
+            transforms.RandomHorizontalFlip(p=0.5),
+            transforms.RandomApply(
+                [
+                    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.1, hue=0.02),
+                ],
+                p=0.6,
+            ),
+            transforms.RandomAffine(
+                degrees=6,
+                translate=(0.04, 0.04),
+                scale=(0.95, 1.05),
+                shear=(-4, 4),
+            ),
+            transforms.RandomPerspective(distortion_scale=0.08, p=0.3),
+            transforms.RandomApply(
+                [transforms.GaussianBlur(kernel_size=3, sigma=(0.1, 1.0))],
+                p=0.25,
+            ),
             transforms.ToTensor(),
             transforms.Normalize(mean=imagenet_mean, std=imagenet_std),
+            transforms.RandomErasing(p=0.25, scale=(0.01, 0.05), ratio=(0.3, 3.3), value="random"),
         ]
     )
     eval_tf = transforms.Compose(
@@ -132,6 +153,7 @@ def train_one_epoch(
     optimizer: torch.optim.Optimizer,
     loss_fn: nn.Module,
     device: str,
+    mixup_alpha: float,
 ) -> Tuple[float, float]:
     model.train()
     running_loss = 0.0
@@ -141,17 +163,22 @@ def train_one_epoch(
     for images, labels in loader:
         images = images.to(device)
         labels = labels.to(device)
+        labels_for_metrics = labels.clone()
 
+        images, targets_a, targets_b, lam = apply_mixup(images, labels, mixup_alpha, device)
         optimizer.zero_grad()
         logits = model(images)
-        loss = loss_fn(logits, labels)
+        if lam is not None:
+            loss = lam * loss_fn(logits, targets_a) + (1.0 - lam) * loss_fn(logits, targets_b)
+        else:
+            loss = loss_fn(logits, labels)
         loss.backward()
         optimizer.step()
 
         running_loss += loss.item() * images.size(0)
         preds = logits.argmax(dim=1)
-        correct += (preds == labels).sum().item()
-        total += labels.size(0)
+        correct += (preds == labels_for_metrics).sum().item()
+        total += labels_for_metrics.size(0)
 
     mean_loss = running_loss / total
     accuracy = correct / total
@@ -199,6 +226,17 @@ def predict(model: nn.Module, loader: DataLoader, device: str) -> Tuple[np.ndarr
     return preds, targets, probs
 
 
+def apply_mixup(images: torch.Tensor, labels: torch.Tensor, alpha: float, device: str):
+    if alpha <= 0.0:
+        return images, labels, None, None
+    lam = np.random.beta(alpha, alpha)
+    indices = torch.randperm(images.size(0), device=device)
+    mixed_images = lam * images + (1.0 - lam) * images[indices, :]
+    targets_a = labels
+    targets_b = labels[indices]
+    return mixed_images, targets_a, targets_b, lam
+
+
 def export_mobile_artifacts(
     model: nn.Module,
     device: str,
@@ -233,21 +271,36 @@ def train(cfg: TrainConfig) -> Dict:
     model = build_model(num_classes=len(idx_to_class)).to(cfg.device)
 
     optimizer = AdamW(model.parameters(), lr=cfg.lr, weight_decay=cfg.weight_decay)
-    scheduler = CosineAnnealingLR(optimizer, T_max=cfg.epochs)
-    loss_fn = nn.CrossEntropyLoss(weight=loss_weights)
+    scheduler = ReduceLROnPlateau(
+        optimizer,
+        mode="min",
+        factor=cfg.scheduler_factor,
+        patience=cfg.scheduler_patience,
+        verbose=True,
+        min_lr=cfg.min_lr,
+    )
+    loss_fn = nn.CrossEntropyLoss(weight=loss_weights, label_smoothing=cfg.label_smoothing)
 
     best_val_acc = 0.0
     best_state = None
 
     for epoch in range(1, cfg.epochs + 1):
-        train_loss, train_acc = train_one_epoch(model, train_loader, optimizer, loss_fn, cfg.device)
+        train_loss, train_acc = train_one_epoch(
+            model,
+            train_loader,
+            optimizer,
+            loss_fn,
+            cfg.device,
+            cfg.mixup_alpha,
+        )
         val_loss, val_acc = evaluate(model, val_loader, loss_fn, cfg.device)
-        scheduler.step()
+        scheduler.step(val_loss)
 
         writer.add_scalar("Loss/train", train_loss, epoch)
         writer.add_scalar("Loss/val", val_loss, epoch)
         writer.add_scalar("Accuracy/train", train_acc, epoch)
         writer.add_scalar("Accuracy/val", val_acc, epoch)
+        writer.add_scalar("LearningRate", optimizer.param_groups[0]["lr"], epoch)
 
         if val_acc > best_val_acc:
             best_val_acc = val_acc
@@ -325,6 +378,11 @@ def parse_args() -> TrainConfig:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num-workers", type=int, default=0)
     parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu")
+    parser.add_argument("--label-smoothing", type=float, default=0.05)
+    parser.add_argument("--mixup-alpha", type=float, default=0.2)
+    parser.add_argument("--scheduler-factor", type=float, default=0.5)
+    parser.add_argument("--scheduler-patience", type=int, default=3)
+    parser.add_argument("--min-lr", type=float, default=1e-6)
 
     args = parser.parse_args()
     return TrainConfig(
@@ -339,6 +397,11 @@ def parse_args() -> TrainConfig:
         num_workers=args.num_workers,
         device=args.device,
         artifacts_dir=args.artifacts_dir,
+        label_smoothing=args.label_smoothing,
+        mixup_alpha=args.mixup_alpha,
+        scheduler_factor=args.scheduler_factor,
+        scheduler_patience=args.scheduler_patience,
+        min_lr=args.min_lr,
     )
 
 
