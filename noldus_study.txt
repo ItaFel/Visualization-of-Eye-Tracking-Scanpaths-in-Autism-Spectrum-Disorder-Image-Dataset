@@ -1,0 +1,345 @@
+Title: Slide 1
+
+URL Source: https://files-profile.medicine.yale.edu/documents/fcce58e8-2deb-4261-882f-3c847d0bdc18
+
+Published Time: Sat, 14 Sep 2024 11:04:27 GMT
+
+Markdown Content:
+• Patterns of child location during a parent -child free play 
+
+are moderately associated across three visits. 
+
+• Correlations  between VT metrics and child clinical 
+
+measures ( social, communication,  inattention) varied 
+
+across time points. 
+
+• Effects of gender emerged with ASD females spending 
+
+more time in the Parent ROI at T1 relative to T2/T3 and 
+
+ASD males showing the opposite pattern. Overall, females 
+
+spent more time engaged in activities at  the table. 
+
+• No  age (high/low) effects were  found, but some trends of 
+
+relations of age with VT metrics were evident. 
+
+• Within the ASD group, low IQ was associated with more 
+
+time in the Parent ROI and less time in the Center ROI. 
+
+• Future analyses should examine site  effects. 
+
+• Future studies should examine VT metrics of school -aged 
+
+children with ASD during a play task with an unfamiliar 
+
+peer .
+
+Background 
+
+Parent -child  interactions are a naturalistic method of 
+
+measuring child behaviors and response to treatment. 
+
+Manual coding  of child behaviors is  time -intensive and 
+
+subjective. Video  tracking (VT) offers  an automated 
+
+alternative to coding, yielding quantitative, objective 
+
+measures of behaviors.  This approach was  recently 
+
+applied to children with autism spectrum disorder (ASD) 
+
+and a non -ASD group during a parent -child free play task 
+
+(PCFP) 1. Further  research is needed to assess  the validity 
+
+and reliability  of VT for school -aged children with ASD. 
+
+This research was supported by NIH 1U19MH108206 -01 (McPartland). 
+
+References : 1 Cohen  et al.,  2014 
+
+Contact  Information : Maura  Sabatos -DeVito , maura.devito@duke.edu 
+
+# A Multi -Site Study of Noldus  EthoVision  XT Video Tracking of 
+
+# Children with and without Autism: Results from the  ABC -CT 
+
+Conclusions 
+
+Objectives 
+
+Maura  Sabatos -DeVito a, Michael Murias  b, Geraldine Dawson  a, Toni Howell  a, Scott Compton  a, Raphael A. Bernier  c, Cynthia A. Brandt  d, Katarzyna  Chawarska  e, James D.  Dzuira  f, Susan  Faja  g, Shafali  S.  Jeste  i, Adam Naples  e, Charles A. Nelson  gh , Frederick  Shic  j, Catherine A. Sugar  k, Sara J. Webb  j, James C. McPartland  e & Autism Biomarkers Consortium for Clinical  Trials               
+
+> (a) Department of Psychiatry and Behavioral Sciences, Duke Center for Autism and Brain Development, Duke University Medical Center; ( b) Duke Institute for Brain Sciences, Duke University Medical Center; ( c) Department of Psychiatry, University of Washington, Seattle, WA, USA ; ( d) Yale School of Medicine; ( e) Yale University School of Medicine, Child Study Center; ( f) Department of Emergency Medicine, Yale Center for Analytical Sciences; ( g) Boston Children’s Hospital and Harvard Medical School;
+> (b) (h) Harvard Graduate School of Education ; ( i) Department of Psychiatry and Biobehavioral Sciences, University of California at Los Angeles; ( j) University of Washington and Seattle Children’s Research Institute Center for Child Behavior, Health, and Development; and (k ) Departments of Biostatistics, Statistics and Psychiatry, University of California at Los Angeles
+
+For a 6 -minute, lab -based PCFP with VT of school -
+
+aged  children with ASD and  TD, we aim to:1)  Determine 
+
+relations among VT metrics across time  points; 2) 
+
+Examine  correlations of  VT metrics  with child 
+
+characteristics; 3 ) Assess  longitudinal change, group 
+
+differences, and covariate effects on VT metrics. 
+
+Total 
+
+Sample 
+
+N=225 
+
+ASD 
+
+N=161 
+
+TD 
+
+N=64 
+
+Age 
+
+Range= 6.0 -11.5  yrs  8.7 years  8.7  years  8.7 years 
+
+Gender  52 F 
+
+173 M 
+
+30 F 
+
+131 M 
+
+22 F 
+
+42 M 
+
+Full Scale IQ  101.156 
+
+SD=19.483 
+
+95.795 
+
+SD=18.913 
+
+114.641 
+
+SD=13.526 
+
+Methods 
+
+Participants were assessed at one of 5 sites at Baseline, 6 
+
+weeks, and 6 months. During a 6 -minute PCFP, the child 
+
+played with any of 8 standardized toys while the parent sat 
+
+in a chair in the corner. The child wore a red shirt, which 
+
+was tracked by Noldus  EthoVision  XT 11.5. Analyses 
+
+include Pearson correlations and  repeated  measures models 
+
+with covariates, including gender, age (high/low), and IQ 
+
+(high/low for  the ASD  group). 
+
+Effects of Gender on Time Spent in ROIs Video Tracking Site -Specific Arenas  ASD Group: Effects of IQ/Time 
+
+Correlations of VT Metrics with Child  Characteristics 
+
+NOTE: FDR adjustment:  a Remained significant  b Did not remain significant 
+
+Sample of Child Movement Patterns  
+
+> *
+> *
+> ** p<0.01, ***p<0.001
+
+VT metrics included percent durations in each of 4 ROIs and 
+
+mean distance to parent. 
+
+Duke  UW 
+
+BCH  Yale  UCLA 
+
+Arenas with Four 
+
+Regions of Interest 
+
+(ROIs) 
+
+Parent 
+
+Center 
+
+Table 
+
+Periphery 
+
+T1 
+
+• Better Social Approach and Rec/Expr  Comm  (PDDBI) 
+
+• Less time in Periphery ROI  (r= -0.18 b, p=.026; r= -0.19 b,
+
+p=.023) 
+
+T2 
+
+• Greater Social Pragmatic Problems (PDDBI) 
+
+• More time in Center ROI  (r=0.31 a, p=.0001) 
+
+• Less time in Parent ROI  (r= -0.21 b, p=.008) and  Table 
+
+ROI  (r= -0.25 b, p=.002) 
+
+• Greater Inattention (CASI) 
+
+• More time in Center ROI  (r=0.21 b, p=.01) 
+
+• Less time in Parent ROI  (r= -0.26 b, p=0.001) 
+
+T3 
+
+• Lower Verbal IQ (DAS -II)/Lower Rec/Expr  Comm 
+
+(PDDBI) 
+
+• More time in  Parent ROI  (r=  -0.17 b, p=.041) 
+
+• Less time in Center ROI:  (DAS -II: r=0.19 b, p=.019; 
+
+PDDBI: r=0.19 b, p=.022) 
+
+T1  • No significant correlations .
+
+T2 
+
+• Better Social Skills (VABS)/Less Social 
+
+Impairment (SRS) 
+
+• More time in Parent ROI  (VABS: r=0.27 b, p=.037; 
+
+SRS: r=  -0.26 b, p=.046) 
+
+• Greater Hyperactive/Impulsive (CASI)  
+
+• More time in Center ROI  (r=0.27 b, p=.036) 
+
+• Better Expressive/Receptive Language (PDDBI) 
+
+• Less time in Periphery ROI ( r=  -0.29 b, p=.027) 
+
+T3 
+
+• Better Expressive/Receptive Language (PDDBI) 
+
+• More time in Parent ROI  (r= 0.26 b, p=.047) 
+
+• Better Social Approach (PDDBI) 
+
+• Less time in Periphery ROI  (r=  -0.26 b, p=.027) 
+
+TD Group 
+
+> Overall F=4.65, p=0.032
+> Overall F=3.32, p=0.006
+
+ASD Group 
+
+Total 
+
+Sample 
+
+(N=201 -
+
+202) 
+
+Mean 
+
+Distance 
+
+to Parent 
+
+Table 
+
+Duration 
+
+%
+
+Parent 
+
+Duration 
+
+%
+
+Periphery 
+
+Duration 
+
+%
+
+Center 
+
+Duration 
+
+%
+
+T1/T2  0.473**  0.497***  0.265***  0.257**  0.355*** 
+
+T1/T3  0.554***  0.486***  0.272***  0.280***  0.381*** 
+
+T2/T3  0.486***  0.521***  0.253**  0.182**  0.404*** 
+
+Correlations of VT Metrics  Across Visits     
+
+> Overall F=4.41, p=0.037 Overall F=4.31, p=0.04
+> 0
+> 10
+> 20
+> 30
+> 40
+> 50
+> 60
+> 70
+> 80
+> Percent Duration in Center ROI
+> ASD IQ Group
+> Center ROI: Main Effect of IQ
+> (ASD Group)
+> IQ<70 IQ>/=70
+> 0
+> 10
+> 20
+> 30
+> 40
+> 50
+> 60
+> 70
+> 80
+> Percent Duration in Center ROI
+> Visit
+> Center ROI: Main Effect of Time
+> (ASD Group)
+> Time 1 Time 2 Time 3
+> Overall F=4.46, p=0.04 Overall F=3.84, p=0.023
+
+Example of 
+
+Standardized 
+
+Toy Kit and 
+
+Room Set Up
