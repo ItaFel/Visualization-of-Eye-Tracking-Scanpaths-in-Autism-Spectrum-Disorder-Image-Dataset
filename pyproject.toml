@@ -1,0 +1,37 @@
+[project]
+name = "eye-tracking-autism-app"
+version = "0.1.0"
+description = "End-to-end autism risk screening platform based on eye-tracking"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.24.0",
+    "sqlmodel>=0.0.14",
+    "pydantic-settings>=2.4.0",
+    "passlib[bcrypt]>=1.7.4",
+    "python-multipart>=0.0.9",
+    "pyjwt>=2.8.0",
+    "python-dotenv>=1.0.1",
+    "opencv-python>=4.10.0",
+    "mediapipe>=0.10.14",
+    "numpy>=1.26.0",
+    "scipy>=1.11.0",
+    "pillow>=10.0.0",
+    "aiofiles>=23.1.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "httpx>=0.26.0",
+    "ruff>=0.5.0"
+]
+
+[tool.uvicorn]
+app = "backend.app.main:app"
+host = "0.0.0.0"
+port = 8000
+reload = true
+
+[tool.ruff]
+line-length = 100
