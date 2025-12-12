@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autism Diagnosis Eye-Tracking</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f0f2f5; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1, h2 { text-align: center; color: #333; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+        button:hover { background-color: #0056b3; }
+        .hidden { display: none; }
+        #video-preview { width: 100%; max-height: 300px; background: #000; margin-top: 10px; }
+        .result-high { color: red; font-weight: bold; }
+        .result-low { color: green; font-weight: bold; }
+        #stimulus-video { width: 100%; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Autism Diagnosis</h1>
+    
+    <!-- Auth Section -->
+    <div id="auth-section">
+        <h2>Login / Register</h2>
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="username">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password">
+        </div>
+        <button onclick="login()">Login</button>
+        <button onclick="register()" style="background-color: #28a745;">Register</button>
+        <p id="auth-error" style="color: red; text-align: center;"></p>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard-section" class="hidden">
+        <h2 id="welcome-msg">Welcome</h2>
+        <button onclick="buyDiagnosis()">Buy Diagnosis ($XX)</button>
+        <button onclick="startDiagnosisFlow()" id="start-btn" class="hidden" style="background-color: #6f42c1;">Start Diagnosis</button>
+        <p id="dash-msg"></p>
+    </div>
+
+    <!-- Consent Section -->
+    <div id="consent-section" class="hidden">
+        <h2>Informed Consent</h2>
+        <p>I hereby agree to the processing of personal data and video recording for the purpose of autism diagnosis...</p>
+        <label><input type="checkbox" id="consent-check"> I agree</label>
+        <button onclick="confirmConsent()">Next</button>
+    </div>
+
+    <!-- Instructions Section -->
+    <div id="instruction-section" class="hidden">
+        <h2>Instructions</h2>
+        <ul>
+            <li>Ensure the room is well-lit.</li>
+            <li>Place the child approximately 50cm from the screen.</li>
+            <li>Ensure the child's face is clearly visible.</li>
+            <li>Press "Start Recording" to begin showing the video.</li>
+        </ul>
+        <button onclick="showRecorder()">Ready</button>
+    </div>
+
+    <!-- Recorder Section -->
+    <div id="recorder-section" class="hidden">
+        <h2>Recording</h2>
+        <p>Please show this video to the child while recording their face.</p>
+        
+        <!-- Placeholder for Stimulus Video -->
+        <video id="stimulus-video" controls>
+             <!-- Replace with actual video source -->
+             <source src="stimulus.mp4" type="video/mp4">
+             Your browser does not support the video tag.
+        </video>
+        
+        <input type="file" id="video-upload" accept="video/*" capture="user">
+        <p><i>On mobile, tapping the button above will open the camera.</i></p>
+        
+        <button onclick="uploadVideo()">Upload & Analyze</button>
+        <p id="upload-status"></p>
+    </div>
+
+    <!-- Result Section -->
+    <div id="result-section" class="hidden">
+        <h2>Analysis Result</h2>
+        <div id="result-content">Loading...</div>
+        <button onclick="resetApp()">Back to Dashboard</button>
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
